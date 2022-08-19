@@ -21,7 +21,7 @@ public class Taller11Agosto {
         b.numerador=sc.nextInt();
         System.out.println("Digite el valor del Denominador: ");
         b.denominador=sc.nextInt();
-        b.numerador=sc.nextInt();
+       
         c=(a.Suma(b)).Simplificado();
         System.out.println("La suma de los fraccionarios es: " + c.numerador + "/"+ c.denominador);
     }
@@ -49,7 +49,7 @@ public class Taller11Agosto {
                 d=denominador + a.denominador;
                 n=(numerador + a.denominador) + (denominador * a.numerador);
             }
-            return new Fraccionario (n,d);
+            return (new Fraccionario (n,d));
         }
         
         public Fraccionario Resta(Fraccionario a){
@@ -61,33 +61,35 @@ public class Taller11Agosto {
             d= denominador * a.denominador;
             n= (numerador * a.denominador)-(denominador * a.numerador);
         }
-        return new Fraccionario(n,d);
+        return (new Fraccionario(n,d));
         }
         
         public Fraccionario Multiplicacion (Fraccionario a){
             int num, den;
             num = numerador * a.numerador;
             den = denominador * a.denominador;
-        return new Fraccionario (num, den);
+        return (new Fraccionario (num, den));
         }
         
         public Fraccionario Division(Fraccionario a){
-            return new Fraccionario(numerador*a.denominador, denominador*a.numerador);
+            return (new Fraccionario(numerador*a.denominador, denominador*a.numerador));
         }
         public Fraccionario Simplificado(){
             Fraccionario T = new Fraccionario();
-            int c=1, bandera = 1;
-            while(numerador % c == 0 && denominador % c == 0 && bandera == 1){
+            int c=2, bandera = 1;
+            while(true){
+                    if(numerador % c == 0 && denominador % c == 0 && bandera == 1){
                 numerador = numerador / c;
                 denominador = denominador / c;
-                System.out.println(numerador + "/ " + denominador);
-                if(numerador % c != 0 || denominador % c != 0){
-                    bandera = 1;
+                    }else {
                     c += 1;
-                }
-                if(c >= numerador || c >= denominador)
-                    break;
-            }return T;
+                        if(c >= numerador || c >= denominador)
+                            break;
+                    }
+                    }
+                    T.numerador=numerador;
+                    T.denominador=denominador;
+                    return T;
         } 
     }  
 }
