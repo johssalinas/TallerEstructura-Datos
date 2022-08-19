@@ -1,6 +1,7 @@
 
 package taller11agosto;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
 import java.util.Scanner;
 
 public class Taller11Agosto {
@@ -82,12 +83,11 @@ public class Taller11Agosto {
                 System.out.println(numerador + "/ " + denominador);
                 if(numerador % c != 0 || denominador % c != 0){
                     bandera = 1;
-                    c++;
+                    c += 1;
                 }
                 if(c >= numerador || c >= denominador)
                     break;
-            }
-        }
-    }
-    
+            }return T;
+        } 
+    }  
 }
