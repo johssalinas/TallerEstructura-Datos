@@ -12,15 +12,29 @@ public class Taller11Agosto {
        b= new Fraccionario();
        c= new Fraccionario();
        
-        System.out.println("Digite el valor del numerador: ");
-        a.numerador=sc.nextInt();
-        System.out.println("Digite el valor del Denominador: ");
-        a.denominador=sc.nextInt();
+        String p,q;
+       
+        System.out.println("Digite un numero: ");
+        p = sc.nextLine();
+        String[] primero = p.split("/");
+        if(p.contains("/")){
+            a.numerador= Integer.parseInt(primero[0]);
+            a.denominador=Integer.parseInt(primero[1]);
+        }else{
+            a.numerador=Integer.parseInt(primero[0]);
+            a.denominador=1;
+        }
         
-        System.out.println("Digite el valor del Numerador: ");
-        b.numerador=sc.nextInt();
-        System.out.println("Digite el valor del Denominador: ");
-        b.denominador=sc.nextInt();
+        System.out.println("Digite otro numero: ");
+        q = sc.nextLine();
+        String[] segundo = q.split("/");
+        if(String.valueOf(q).contains("/")){
+            b.numerador=Integer.parseInt(segundo[0]);
+            b.denominador= Integer.parseInt(segundo[1]);
+        }else{
+            b.numerador=Integer.parseInt(segundo[0]);
+            b.denominador=1;
+        }
        
         c=(a.Suma(b)).Simplificado();
         System.out.println("La suma de los fraccionarios es: " + c.numerador + "/"+ c.denominador);
