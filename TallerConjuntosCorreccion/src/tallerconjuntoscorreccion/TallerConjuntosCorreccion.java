@@ -24,40 +24,48 @@ public class TallerConjuntosCorreccion {
         System.out.println("3) diferencia simetrica");
         System.out.println("4) pertenece");
         System.out.println("5) incluido");
+        
         int seleccion = sc.nextInt();
         switch(seleccion){
             case 1:
                 pedirDatos(a,b,sc);
                 c= a.Union(b);
+                imprimir(c);
                 break;
             case 2:
                 pedirDatos(a,b,sc);
                 c= a.Interseccion(b);
+                imprimir(c);
+
                 break;
             case 3:
                 pedirDatos(a,b,sc);
                 c= a.DiferenciaSimetrica(b);
+                imprimir(c);                
                 break;
             case 4:
                 pedirDatos(a,b,sc);
-                c= a.DiferenciaSimetrica(b);
+                if(a.Pertenece(b))System.out.println("B SÍ pertenece en A: ");
+                else System.out.println("B NO pertenece en A: ");
+
                 break;
             case 5:
                 pedirDatos(a,b,sc);
                 c= a.DiferenciaSimetrica(b);
+                imprimir(c);
                 break;
             default:
                 System.out.println("Digite un valor válido");
-        }
-        imprimir(c);
-        
+        }        
     }
     public static void pedirDatos(Conjunto a, Conjunto b, Scanner sc){
-        System.out.println("\n\tDigita los 5 elementos del primer vector\n");
+        System.out.println("\n\tDigita los elementos del primer vector\n");
         int opcion=1,c1=0;
         while(opcion == 1){
             int i;
-            for(i=0;i<5;i++){
+            System.out.println("Cuantos elementos tiene el conjunto A?");
+            int elementos = sc.nextInt();
+            for(i=0;i<elementos;i++){
                System.out.println("Digite el "+(i+1) +" valor del dato del conjunto A");
             a.items[c1++]=sc.nextInt();
             if(c1>=5) break; 
@@ -65,12 +73,14 @@ public class TallerConjuntosCorreccion {
         }
         a.contador=c1;
         
-        System.out.println("\n\tDigite los 5 elementos del segundo vector\n");
+        System.out.println("\n\tDigite los elementos del segundo vector\n");
         opcion=1;c1=0;
         while(opcion == 1){
             int i;
-            for(i=0;i<5;i++){
-            System.out.println("Digite el valor del dato del conjunto B");
+            System.out.println("Cuantos elementos tiene el conjunto B?");
+            int elementos = sc.nextInt();
+            for(i=0;i<elementos;i++){
+            System.out.println("Digite el "+(i+1) +" valor del dato del conjunto B");
             b.items[c1++]=sc.nextInt();
             if(c1>=5)break;
             }break;
@@ -105,7 +115,7 @@ public class TallerConjuntosCorreccion {
             int i=0, dato=0;
             while(true){
                 dato=items[i];
-                if(R.Encontrar(dato))
+                if(!R.Encontrar(dato))
                     R.items[R.contador]=items[i++];
                 else
                     ++i;
@@ -146,8 +156,11 @@ public class TallerConjuntosCorreccion {
             return R;
         }
         
-       // public boolean Pertenece(int a){
-            
-        //}
+        public boolean Pertenece(Conjunto a){
+            for(int i=0;i<=a.contador;i++){
+                if(!Encontrar(a.items[i])) return false;
+            }
+            return true;
+        }
     }
 }
