@@ -18,12 +18,12 @@ public class TallerConjuntosCorreccion {
         b=new Conjunto();
         c=new Conjunto();
         
-        System.out.println("¿Qué operacion desea realizar?");
-        System.out.println("1) union");
-        System.out.println("2) interseccion");
-        System.out.println("3) diferencia simetrica");
-        System.out.println("4) pertenece");
-        System.out.println("5) incluido");
+        System.out.println("\t¿Qué operacion desea realizar?");
+        System.out.println("\t1) union");
+        System.out.println("\t2) interseccion");
+        System.out.println("\t3) diferencia simetrica");
+        System.out.println("\t4) pertenece");
+        System.out.println("\t5) incluido");
         
         int seleccion = sc.nextInt();
         switch(seleccion){
@@ -36,7 +36,6 @@ public class TallerConjuntosCorreccion {
                 pedirDatos(a,b,sc);
                 c= a.Interseccion(b);
                 imprimir(c);
-
                 break;
             case 3:
                 pedirDatos(a,b,sc);
@@ -44,15 +43,29 @@ public class TallerConjuntosCorreccion {
                 imprimir(c);                
                 break;
             case 4:
-                pedirDatos(a,b,sc);
-                if(a.Pertenece(b))System.out.println("B SÍ pertenece en A: ");
-                else System.out.println("B NO pertenece en A: ");
-
-                break;
+                System.out.println("\n\tDigita los elementos del vector\n");
+                int opcion=1,c1=0;
+                while(opcion == 1){
+                    int i;
+                    System.out.println("Cuantos elementos tiene el conjunto?");
+                    int elementos = sc.nextInt();
+                    for(i=0;i<elementos;i++){
+                        System.out.println("Digite el "+(i+1) +" valor del dato del conjunto");
+                        a.items[c1++]=sc.nextInt();
+                        if(c1>=5) break; 
+                    }break;
+                }
+                a.contador=c1;
+                    
+                System.out.println("\tDigita un número");
+                    int d = sc.nextInt();
+                    if(a.Pertenece(d)) System.out.println(d+" SÍ pertenece al conjunto");
+                    else System.out.println(d+" NO pertenece al conjunto");
+                    break;
             case 5:
                 pedirDatos(a,b,sc);
-                c= a.DiferenciaSimetrica(b);
-                imprimir(c);
+                if(a.Incluido(b))System.out.println("B SÍ está incluido en A: ");
+                else System.out.println("B NO está incluido en A: ");
                 break;
             default:
                 System.out.println("Digite un valor válido");
@@ -73,7 +86,7 @@ public class TallerConjuntosCorreccion {
         }
         a.contador=c1;
         
-        System.out.println("\n\tDigite los elementos del segundo vector\n");
+        System.out.println("\tDigite los elementos del segundo vector\n");
         opcion=1;c1=0;
         while(opcion == 1){
             int i;
@@ -156,7 +169,11 @@ public class TallerConjuntosCorreccion {
             return R;
         }
         
-        public boolean Pertenece(Conjunto a){
+        public boolean Pertenece(int a){
+            return Encontrar(a);
+        }
+        
+        public boolean Incluido(Conjunto a){
             for(int i=0;i<=a.contador;i++){
                 if(!Encontrar(a.items[i])) return false;
             }
