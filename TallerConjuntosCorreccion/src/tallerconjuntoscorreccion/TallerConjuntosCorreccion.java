@@ -28,17 +28,17 @@ public class TallerConjuntosCorreccion {
         int seleccion = sc.nextInt();
         switch(seleccion){
             case 1:
-                pedirDatos(a,b,sc);
+                pedirDatos(a,b);
                 c= a.Union(b);
                 imprimir(c);
                 break;
             case 2:
-                pedirDatos(a,b,sc);
+                pedirDatos(a,b);
                 c= a.Interseccion(b);
                 imprimir(c);
                 break;
             case 3:
-                pedirDatos(a,b,sc);
+                pedirDatos(a,b);
                 c= a.DiferenciaSimetrica(b);
                 imprimir(c);                
                 break;
@@ -52,7 +52,7 @@ public class TallerConjuntosCorreccion {
                     for(i=0;i<elementos;i++){
                         System.out.println("Digite el "+(i+1) +" valor del dato del conjunto");
                         a.items[c1++]=sc.nextInt();
-                        if(c1>=5) break; 
+                        if(c1>=15) break; 
                     }break;
                 }
                 a.contador=c1;
@@ -63,7 +63,7 @@ public class TallerConjuntosCorreccion {
                     else System.out.println(d+" NO pertenece al conjunto");
                     break;
             case 5:
-                pedirDatos(a,b,sc);
+                pedirDatos(a,b);
                 if(a.Incluido(b))System.out.println("B SÍ está incluido en A: ");
                 else System.out.println("B NO está incluido en A: ");
                 break;
@@ -71,7 +71,8 @@ public class TallerConjuntosCorreccion {
                 System.out.println("Digite un valor válido");
         }        
     }
-    public static void pedirDatos(Conjunto a, Conjunto b, Scanner sc){
+    public static void pedirDatos(Conjunto a, Conjunto b){
+        Scanner sc = new Scanner(System.in);
         System.out.println("\n\tDigita los elementos del primer vector\n");
         int opcion=1,c1=0;
         while(opcion == 1){
@@ -81,7 +82,7 @@ public class TallerConjuntosCorreccion {
             for(i=0;i<elementos;i++){
                System.out.println("Digite el "+(i+1) +" valor del dato del conjunto A");
             a.items[c1++]=sc.nextInt();
-            if(c1>=5) break; 
+            if(c1>=15) break; 
             }break;
         }
         a.contador=c1;
@@ -95,7 +96,7 @@ public class TallerConjuntosCorreccion {
             for(i=0;i<elementos;i++){
             System.out.println("Digite el "+(i+1) +" valor del dato del conjunto B");
             b.items[c1++]=sc.nextInt();
-            if(c1>=5)break;
+            if(c1>=15)break;
             }break;
         }
         b.contador=c1;
