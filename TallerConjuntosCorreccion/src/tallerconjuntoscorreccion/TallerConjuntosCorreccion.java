@@ -3,18 +3,18 @@ package tallerconjuntoscorreccion;
 import java.util.Scanner;
 
 /**
- * @author Johs Brayan Salinas Lopez - Yhon Jairo Ochoa Mayorga
+ * @authores Johs Brayan Salinas Lopez - Yhon Jairo Ochoa Mayorga
  */
 public class TallerConjuntosCorreccion {
     
-    //Ingresa los datos y los guarda en Scanner
+        //Ingresa los datos y los guarda en Scanner
     public static int input(String a){
         System.out.print(a);
         return new Scanner(System.in).nextInt();
-        } 
+    } 
     
         //Imprime los datos
-        public static void output(Conjunto a){
+    public static void output(Conjunto a){
         for(int i = 0; i<a.contador;i++)System.out.print(a.items[i] + " ");
     }
 
