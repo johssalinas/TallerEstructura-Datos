@@ -29,35 +29,34 @@ public class TallerConjuntosCorreccion {
         *    Menú
         *************/
         System.out.println("\t¿Qué operacion desea realizar?");
-        System.out.println("\t1) union");
-        System.out.println("\t2) interseccion");
-        System.out.println("\t3) diferencia simetrica");
-        System.out.println("\t4) pertenece");
-        System.out.println("\t5) incluido");
+        System.out.println("\t1) Union");
+        System.out.println("\t2) Interseccion");
+        System.out.println("\t3) Diferencia simetrica");
+        System.out.println("\t4) Pertenece");
+        System.out.println("\t5) Incluido");
         int seleccion = sc.nextInt();
         switch(seleccion){
             case 1:
-                pedirDatos(primerConjunto,segundoConjunto);
-                output((primerConjunto.union(segundoConjunto)).ordenar());
+                pedirDatos(primerConjunto); pedirDatos(segundoConjunto);
+                output((primerConjunto.union(segundoConjunto)));
                 break;
             case 2:
-                pedirDatos(primerConjunto,segundoConjunto);
-                output((primerConjunto.interseccion(segundoConjunto)).ordenar());
+                pedirDatos(primerConjunto); pedirDatos(segundoConjunto);
+                output((primerConjunto.interseccion(segundoConjunto)));
                 break;
             case 3:
-                pedirDatos(primerConjunto,segundoConjunto);
-                output(primerConjunto.diferenciaSimetrica(segundoConjunto).ordenar());                
+                pedirDatos(primerConjunto); pedirDatos(segundoConjunto);
+                output(primerConjunto.diferenciaSimetrica(segundoConjunto));                
                 break;
             case 4:
-                primerConjunto.contador = input("\n\tDigita la cantidad elementos del primer conjunto ");
-                for(int i = 0; i < primerConjunto.contador; i++) primerConjunto.items[i] = input("Digite el elemento " +(i+1) +" del primer conjunto ");
-                 
+                // Pide los datos del primer conjunto y un número para saber si está dentro del primer conjunto
+                pedirDatos(primerConjunto);
                 int numeroPertenece = input("\n\tDigita un número ");
                     if(primerConjunto.pertenece(numeroPertenece)) System.out.println(numeroPertenece+" SÍ pertenece al conjunto");
                     else System.out.println(numeroPertenece+" NO pertenece al conjunto");
                     break;
             case 5:
-                pedirDatos(primerConjunto,segundoConjunto);
+                pedirDatos(primerConjunto); pedirDatos(segundoConjunto);
                 if(primerConjunto.incluido(segundoConjunto))System.out.println("B SÍ está incluido en A: ");
                 else System.out.println("B NO está incluido en A: ");
                 break;
@@ -66,13 +65,18 @@ public class TallerConjuntosCorreccion {
         }        
     }
     
-    //Metodo para pedir los valores de los 2 vectores
-    public static void pedirDatos(Conjunto primerConjunto, Conjunto segundoConjunto){
-        primerConjunto.contador = input("\n\tDigita la cantidad de elementos del primer conjunto ");
-        for(int i = 0; i < primerConjunto.contador; i++) primerConjunto.items[i] = input("Digite el elemento " +(i+1) +" del primer conjunto ");
-        
-        segundoConjunto.contador = input("\n\tDigita la cantidad de elementos del segundo conjunto ");
-        for(int i = 0; i < segundoConjunto.contador; i++) segundoConjunto.items[i] = input("Digite el elemento " +(i+1) +" del segundo conjunto ");
+    /*
+    * Metodo para pedir los valores del vector
+    * Se ejecuta el bucle hasta que el valor digitado sea menor a 15
+    */
+    public static void pedirDatos(Conjunto conjuntoRecibido){
+        int elementos;
+        do 
+            elementos = input("\n\tDigita la cantidad de elementos del conjunto (debe ser menor a 15) "); 
+        while(elementos >15);
+        conjuntoRecibido.contador = elementos;
+        for(int i = 0; i < conjuntoRecibido.contador; i++)
+        conjuntoRecibido.items[i] = input("Digite el elemento " +(i+1) +" del conjunto "); 
     }
     
     public static class Conjunto{
@@ -85,17 +89,23 @@ public class TallerConjuntosCorreccion {
         public Conjunto (int v[]){
             items = v;
         }
+        /*
+        * Guarda el valor del conjunto inmerso en un objeto auxiliar, luego recorre el segundo conjunto
+        * y guarda en el auxiliar los valores que están en ambos conjuntos pero sin repetirlos
+        */
         public Conjunto union(Conjunto conjuntoRecibido){
             Conjunto auxConjunto = new Conjunto();
             auxConjunto.contador=0;
-            for(int i=0; i<conjuntoRecibido.contador; i++) auxConjunto.items[auxConjunto.contador++] = conjuntoRecibido.items[i];
-            
             for(int i=0;i<contador;i++){
                 if(!auxConjunto.encontrar(items[i])) auxConjunto.items[auxConjunto.contador++]=items[i];
             }
+            for(int i=0; i<conjuntoRecibido.contador; i++) auxConjunto.items[auxConjunto.contador++] = conjuntoRecibido.items[i];
             return auxConjunto;
         }
         
+        /*
+        * Guarda en un objeto auxiliar los valores que se repiten en ambos conjuntos
+        */
         public Conjunto interseccion (Conjunto conjuntoRecibido){
             Conjunto auxConjunto = new Conjunto();
             auxConjunto.contador=0;
@@ -105,6 +115,9 @@ public class TallerConjuntosCorreccion {
             return auxConjunto;
         }
         
+        /*
+        * Guarda en un objeto auxiliar los valores que NO se repiten en ambos conjuntos 
+        */
         public Conjunto diferenciaSimetrica (Conjunto conjuntoRecibido){
             Conjunto auxConjunto = new Conjunto();
             auxConjunto.contador=0;
@@ -120,10 +133,16 @@ public class TallerConjuntosCorreccion {
             return auxConjunto;
         }
         
+        /*
+        * Valida si el numero digitado existe dentro del conjunto inmerso
+        */
         public boolean pertenece(int valorRecibido){
             return encontrar(valorRecibido);
         }
         
+        /*
+        * Valida si cada valor del elemento enviado existe dentro de los valores del conjunto inmerso
+        */
         public boolean incluido(Conjunto conjuntoRecibido){
             for(int i=0;i<=conjuntoRecibido.contador;i++){
                 if(!encontrar(conjuntoRecibido.items[i])) return false;
@@ -131,29 +150,11 @@ public class TallerConjuntosCorreccion {
             return true;
         }
         
-        //Recorre el array y retorna true cuando el item está en el conjunto
+        //Recorre el array y retorna true cuando el valor existe en el conjunto
         public boolean encontrar(int conjuntoRecibido){
             for(int i=0; i<items.length;i++)
                 if(conjuntoRecibido == items[i]) return true;
             return false;
-        }
-        
-        //Metodo para ordenar los elementos
-        public Conjunto ordenar(){
-            int aux;
-            int cont;
-            do{
-                cont = 0;
-                for(int i = 1; i < contador ; i++){
-                if(items[i-1]> items[i]){
-                    aux = items[i-1];
-                    items[i-1]= items[i];
-                    items[i]= aux;
-                    cont++;
-                }
-            }   
-            }while(cont != 0);
-            return this;
         }
     }
 }
