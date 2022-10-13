@@ -1,7 +1,9 @@
 package org.johs;
 
 import java.util.Scanner;
-
+/**
+ * @author Johs Brayan Salinas López
+ */
 public class Main {
     public static void main(String[] args) {
         Pila lista = new Pila();
@@ -14,7 +16,7 @@ public class Main {
                     "2) Pop\n" +
                     "3) Stack\n" +
                     "4) suma de primos\n" +
-                    "8) Imprimir los primos\n" +
+                    "5) Imprimir los primos\n" +
                     "0) salir");
             opcion = sc.nextInt();
             switch (opcion){
@@ -23,7 +25,7 @@ public class Main {
                     lista.push(sc.nextInt());
                     break;
                 case 2:
-                    lista.pop();
+                    System.out.println("Se eliminó "+ lista.pop().info);
                     break;
                 case 3:
                     if(lista.stack() == 0)
@@ -31,9 +33,11 @@ public class Main {
                     else
                         System.out.println("stack: "+ lista.stack());
                     break;
-
                 case 4:
                     System.out.println("La suma de los primos es: "+ lista.sumaPrimos());
+                    break;
+                case 5:
+                    lista.imprimirLista();
                     break;
                 case 0:
                     System.out.println("Gracias por usar el programa");
@@ -45,18 +49,18 @@ public class Main {
         }while(opcion !=0);
     }
     public static class Pila{
-        nodo primero;
+        nodo primero, ultimo;
         public void push(int valor){
-            nodo temporal = new nodo();
-            nodo otro = new nodo();
-            temporal.info = valor;
-            temporal.siguiente = null;
-            if(vacio())
-                primero = temporal;
+            nodo nuevo = new nodo();
+            nuevo.info = valor;
+            nuevo.siguiente = null;
+            if(vacio()) {
+                primero = nuevo;
+                ultimo = nuevo;
+            }
             else{
-                otro = primero;
-                primero = temporal;
-                primero.siguiente = otro;
+                ultimo.siguiente = nuevo;
+                ultimo = ultimo.siguiente;
             }
         }
         public nodo pop(){
@@ -66,42 +70,41 @@ public class Main {
                 temporal = primero;
                 primero = null;
             }else{
-                current=temporal=primero;
-                while (temporal.siguiente != null) {
-                    current = temporal;
-                    temporal = temporal.siguiente;
+                temporal = ultimo;
+                current = primero;
+                while (current.siguiente != null) {
+                    ultimo = current;
+                    current = current.siguiente;
                 }
-                current.siguiente = null;
+                ultimo.siguiente = null;
             }
             return temporal;
         }
         public int stack(){
-            return (!vacio())?primero.info:0;
+            return (!vacio())?ultimo.info:0;
         }
         public int sumaPrimos(){
             int suma = 0;
             if(vacio())
                 System.out.println("La lista está vacía");
             else{
-                nodo temporal = new nodo();
-                while (temporal != null) {
-                    if(temporal.esPar())
+                while (primero != null) {
+                    if(ultimo.esPrimo()) {
                         suma += pop().info;
+                    }
                     else pop();
                 }
             }
             return suma;
         }
         public void imprimirLista(){
-            nodo temporal = new nodo();
-            temporal = primero;
             if (vacio())
                 System.out.println("La lista está vacía");
             else{
                 while (primero != null) {
-                    temporal = pop();
-                    System.out.println(temporal.info);
-                    if(temporal == null) break;
+                    if (ultimo.esPrimo())
+                        System.out.println(pop().info);
+                    else pop();
                 }
             }
         }
