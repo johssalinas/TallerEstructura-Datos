@@ -16,9 +16,9 @@ public class Main {
         int opcion,lugar;
         System.out.println("Practica nodos\n ¿Qué desea hacer?\n");
         do{
-            System.out.println("\n1) Push\n" +
-                    "2) Pop\n" +
-                    "3) Stack\n" +
+            System.out.println("\n1) Acolar\n" +
+                    "2) Desacolar\n" +
+                    "3) Sumar el par más grande con el primer impar\n" +
                     "4) suma de primos\n" +
                     "5) Imprimir los primos\n" +
                     "0) salir");
@@ -27,12 +27,12 @@ public class Main {
                 case 1:
                     System.out.println("Valor del nodo");
                     cola.acolar(sc.nextInt());
-                    cola.acolar(1);
+                    cola.acolar(6);
                     cola.acolar(2);
                     cola.acolar(3);
-                    cola.acolar(4);
-                    cola.acolar(5);
-                    cola.acolar(6);
+                    cola.acolar(9);
+                    cola.acolar(8);
+                    cola.acolar(10);
                     otraCola.acolar(11);
                     otraCola.acolar(12);
                     otraCola.acolar(13);
@@ -44,10 +44,7 @@ public class Main {
                     System.out.println("Se eliminó "+ cola.desacolar().info);
                     break;
                 case 3:
-                    if(pila.stack() == 0)
-                        System.out.println("La pila está vacía");
-                    else
-                        System.out.println("stack: "+ pila.stack());
+                    System.out.println("La suma es "+ cola.sumaParGrandePrimerImpar());
                     break;
                 case 4:
                     cola.intercalarColas(otraCola);
@@ -136,8 +133,10 @@ public class Main {
             nodo otro = new nodo();
             temporal.info = valor;
             temporal.siguiente = null;
-            if(vacio())
+            if(vacio()) {
                 primero = temporal;
+                ultimo = primero;
+            }
             else{
                 otro = primero;
                 primero = temporal;
@@ -168,18 +167,16 @@ public class Main {
             nodo temporal = new nodo();
             temporal = primero;
             int mayor = 0, primo = 0;
+            boolean band = true;
             while (temporal != null){
-                if(temporal.esPar())
-                    if(mayor<temporal.info)
+                if(temporal.esPar()) {
+                    if (mayor < temporal.info)
                         mayor = temporal.info;
-                temporal = temporal.siguiente;
-            }
-            temporal = primero;
-            while (temporal!=null){
-                if(temporal.esPrimo()){
+                }else if(band) {
                     primo = temporal.info;
-                    break;
-                }else temporal = temporal.siguiente;
+                    band=false;
+                }
+                temporal = desacolar();
             }
             return (mayor+primo);
         }
